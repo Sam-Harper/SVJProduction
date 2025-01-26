@@ -5,15 +5,15 @@ This is the set of instructions to run at RAL. It supplements the generic README
 
 For Run 2 ultra-legacy MC production (2016APV, 2016, 2017, 2018), `CMSSW_10_6_29_patch1` is used.
 
-To setup the area for condor submission do the commands below
-
+To setup the area for condor submission do the commands below. Note please do this in a clean terminal as any previous call hosts setup will mess with this
 ```bash
+source /cvmfs/cms.cern.ch/cmsset_default.sh
 #release setup (part1)
 mkdir SVJ # or whatever you want to call the directory 
 cd SVJ
 wget https://raw.githubusercontent.com/cms-svj/SVJProduction/Run2_UL/setup.sh
 chmod +x setup.sh
-./setup.sh -f Sam-Harper -b Run2_UL_RAL
+cmssw-el7 -- ./setup.sh -f Sam-Harper -b Run2_UL_RAL -t #-t gives the hlt releases 
 #call host setup (part 2)
 git clone https://github.com/FNALLPC/lpc-scripts
 mkdir call_host_dir #where it will make the pipes
