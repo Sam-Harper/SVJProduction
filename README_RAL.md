@@ -47,7 +47,9 @@ Then we will enter the container and setup the environment there before running 
 export CALL_HOST_DIR=$PWD/call_host_dir
 export CALL_HOST_STATUS=enable
 export X509_USER_PROXY=$PWD/x509up_u$UID
+source lpc-scripts/call_host.sh 
 cmssw-el7 #now enter the container
+source lpc-scripts/call_host.sh 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 export X509_USER_PROXY=$PWD/x509up_u$UID #also set this up in the container
 cd CMSSW_10_6_29_patch1/src/SVJ/Production
