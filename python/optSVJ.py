@@ -53,6 +53,7 @@ options.register("threads", 1, VarParsing.multiplicity.singleton, VarParsing.var
 options.register("streams", 0, VarParsing.multiplicity.singleton, VarParsing.varType.int)
 options.register("redir", "", VarParsing.multiplicity.singleton, VarParsing.varType.string)
 options.register("tmi", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
+options.register("useFolders", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register("dump", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.register("dryrun", False, VarParsing.multiplicity.singleton, VarParsing.varType.bool)
 options.parseArguments()

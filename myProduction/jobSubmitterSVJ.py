@@ -12,10 +12,25 @@ class jobSubmitterSVJ(jobSubmitter):
     def __init__(self,argv=None,parser=None):
         super(jobSubmitterSVJ,self).__init__(argv,parser)
 
+        if self.cmsswContainer!=None:
+            self.containerFix()
+
         if self.suep:
             self.helper = suepHelper()
         else:
             self.helper = svjHelper(self.svjgamma)
+
+    def containerFix(self):
+        jdl_cont_filename = self.jdl+".container"
+        with open(self.jdl,'r') as jfile:
+            with open(jdl_cont_filename,'w') as jfilecont:
+                for line in jfile:
+                    if line.startswith("universe"):
+                        jfilecont.write("universe = container\n")
+                    elif not (line.startswith("+REQUIRED_OS") or line.startswith("+DesiredOS")):
+                        jfilecont.write(line)                        
+                jfilecont.write("container_image = "+self.cmsswContainer+"\n")
+        self.jdl = jdl_cont_filename
 
     def addDefaultOptions(self,parser):
         super(jobSubmitterSVJ,self).addDefaultOptions(parser)
@@ -48,6 +63,7 @@ class jobSubmitterSVJ(jobSubmitter):
         parser.add_option("-A", "--args", dest="args", default="", help="additional common args to use for all jobs (default = %default)")
         parser.add_option("-v", "--verbose", dest="verbose", default=False, action="store_true", help="enable verbose output (default = %default)")
         parser.add_option("--chain-name", dest="chainName", default="", help="value for job.chainName (default = %default)")
+        parser.add_option("--cmssw-container",dest="cmsswContainer",default=None,help="container for CMSSW jobs")
 
     def runPerJob(self,job):
         super(jobSubmitterSVJ,self).runPerJob(job)

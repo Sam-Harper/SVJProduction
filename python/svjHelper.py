@@ -6,6 +6,7 @@ import numpy as np
 #import ROOT as rt
 #from scipy.interpolate import interp1d
 #from scipy.special import exp1
+from inspect import currentframe, getframeinfo
 
 class quark(object):
     def __init__(self,id,mass,charge):
@@ -97,11 +98,11 @@ class quarklist(object):
     def get(self,active=False):
         return [q for q in self.qlist if (q.active if active else q.on)]
 
-
 class svjHelper(object):
     def __init__(self,svjgamma):
         with open(os.path.join(os.path.expandvars('$CMSSW_BASE'),'src/SVJ/Production/test/dict_xsec_Zprime.txt'),'r') as xfile:
             self.xsecs = {int(xline.split('\t')[0]): float(xline.split('\t')[1]) for xline in xfile}
+        print(xfile)
         self.quarks_pseudo = quarklist()
         self.quarks_vector = quarklist()
         self.quarks = quarklist()
@@ -117,7 +118,7 @@ class svjHelper(object):
 
 
     # Calculation of rho mass from Lattice QCD fits (arXiv:2203.09503v2)
-    def calcLatticePrediction(self,mPiOverLambda,mPseudo):        
+    def calcLatticePrediction(self,mPiOverLambda,mPseudo):
         mVectorOvermPseudo = (1.0/mPiOverLambda)*math.pow(5.76 + 1.5*math.pow(mPiOverLambda,2) ,0.5) 
         mVector = mVectorOvermPseudo*mPseudo
         return mVector
@@ -182,26 +183,26 @@ class svjHelper(object):
             
 
     def getOutName(self,events=0,signal=True,outpre="outpre",part=None,sanitize=False,gridpack=False):
-            _outname = outpre
-            if signal:
-                params = [
-                    ("channel", "{}-channel".format(self.channel)),
-                ]
-                if self.nMediator is not None: params.append(("nMediator", "nMed-{:g}".format(self.nMediator)))
-                params.extend([
+        _outname = outpre
+        if signal:
+            params = [
+                ("channel", "{}-channel".format(self.channel)),
+            ]
+            if self.nMediator is not None: params.append(("nMediator", "nMed-{:g}".format(self.nMediator)))
+            params.extend([
                 ("mMediator", "mMed-{:g}".format(self.mMediator)),
                 ("mDark", "mDark-{:g}".format(self.mPseudo)),
                 ("rinv", "rinv-{:g}".format(self.rinv)),
                 ("alpha", "alpha-{}".format(self.brGamma)),
                 ])
-                if self.yukawa is not None: _outname += "_yukawa-{:g}".format(self.yukawa)
-                if self.boost>0: _outname += "_{}{:g}".format(self.boostvar.upper(),self.boost)
-                not_for_gridpack = ["rinv","alpha"]
-                if not self.sepproc: not_for_gridpack.append("nMediator")
-                if self.boostvar=="pt": not_for_gridpack.append("boost")
-                for pname, pval in params:
-                    if gridpack and pname in not_for_gridpack: continue
-                    _outname += "_"+pval
+            if self.yukawa is not None: _outname += "_yukawa-{:g}".format(self.yukawa)
+            if self.boost>0: _outname += "_{}{:g}".format(self.boostvar.upper(),self.boost)
+            not_for_gridpack = ["rinv","alpha"]
+            if not self.sepproc: not_for_gridpack.append("nMediator")
+            if self.boostvar=="pt": not_for_gridpack.append("boost")
+            for pname, pval in params:
+                if gridpack and pname in not_for_gridpack: continue
+                _outname += "_"+pval
 
             if self.generate is not None:
                 if self.generate:
@@ -492,5 +493,4 @@ class svjHelper(object):
                 procSingle = "" if self.sepproc and self.nMediator==1 else "#",
                 procNonresonant = "" if self.sepproc and self.nMediator==0 else "#",
             )
-
         return mg_model_dir, mg_input_dir

@@ -56,7 +56,7 @@ if [[ -n "$REDIR" ]]; then
 fi
 
 echo "Home directory (no source bash_profile): $HOME"
-export HOME=/afs/cern.ch/user/c/cazzanig
+#export HOME=/afs/cern.ch/user/c/cazzanig
 echo "Home directory (after source bash_profile): $HOME"
 echo "${EXE} ${SCRIPT} ${ARGS} 2>&1"
 ${EXE} ${SCRIPT} ${ARGS} 2>&1

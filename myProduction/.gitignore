@@ -11,4 +11,6 @@ createChain.py
 jobExecCondor_*.jdl
 checkpoints_*/
 chain*/
+input/
+scans/
 
