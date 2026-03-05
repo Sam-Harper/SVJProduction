@@ -16,7 +16,7 @@ for p in params:
 sigs.add(stmp)
 
 # vary one at a time
-for i, (p, vals) in enumerate(params.iteritems()):
+for i, (p, vals) in enumerate(params.items()):
     for v in vals[1]:
         tmp = list(stmp)
         tmp[i] = v

@@ -1,6 +1,10 @@
-import os, shutil, tarfile, glob, six
+import os, shutil, tarfile, glob
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
-from collections import OrderedDict, Callable
+from collections import OrderedDict
+try:
+    from collections.abc import Callable
+except ImportError:
+    from collections import Callable
 
 class DefaultOrderedDict(OrderedDict):
     # Source: http://stackoverflow.com/a/6190500/562769
@@ -138,7 +142,7 @@ def createChain(jdls,name,log,checkpoint):
     # write final jdl file
     finalname = "jobExecCondor_{}.jdl".format(name)
     with open(finalname,'w') as ffile:
-        ffile.write('\n'.join([key+" = "+val for key,val in six.iteritems(final)])+'\n')
+        ffile.write('\n'.join([key+" = "+val for key,val in final.items()])+'\n')
         ffile.write(queue+'\n')
 
 if __name__=="__main__":

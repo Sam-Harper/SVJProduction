@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os,subprocess,shlex
 from collections import OrderedDict, defaultdict
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter, RawTextHelpFormatter, RawDescriptionHelpFormatter, _AppendAction
@@ -169,7 +170,7 @@ if __name__=="__main__":
         ]
         cmd = '\n'.join(cmd).format(hlt_versions[args.year]["CMSSW_VERSION"], args.tardir)
         stdout = None
-        if args.verbose: print cmd
+        if args.verbose: print(cmd)
         else: stdout = open(os.devnull, 'w')
         subprocess.check_call(cmd, shell=True, stdout=stdout, stderr=subprocess.STDOUT)
 
