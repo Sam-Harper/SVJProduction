@@ -243,7 +243,7 @@ class jobSubmitterSVJ(jobSubmitter):
                         arglist.append("inpre="+self.inpre)
                     if len(self.args)>0:
                         arglist.insert(0,self.args)
-                    if self.cpus>1:
+                    if int(self.cpus)>1:
                         arglist.append("threads="+str(self.cpus))
                     if len(self.redir)>1:
                         arglist.append("redir="+self.redir)

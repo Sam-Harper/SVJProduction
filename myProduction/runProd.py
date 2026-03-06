@@ -161,7 +161,7 @@ if __name__=="__main__":
     }
 
     # create and copy tarball for HLT CMSSW version
-    if "HLT" in chain and not args.keep:
+    if "HLT" in chain and not args.keep and args.year in hlt_versions:
         cmd = [
             "CUR_DIR=$PWD",
             "cd $CMSSW_BASE/../HLT/{0}/src/SVJ/Production/batch",
@@ -218,7 +218,7 @@ if __name__=="__main__":
         # HLT: use 10_6_X jobSubmitterSVJ, but make it specify the correct CMSSW version in JDL
         env_keys = ["CMSSW_VERSION", "SCRAM_ARCH"]
         old_env = {key:os.getenv(key) for key in env_keys}
-        if step=="HLT":
+        if step=="HLT" and args.year in hlt_versions:
             for key in env_keys:
                 os.environ[key] = hlt_versions[args.year][key]
 
