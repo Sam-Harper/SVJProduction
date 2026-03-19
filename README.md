@@ -14,16 +14,40 @@ cmsenv
 cd SVJ/Production
 ```
 
+
 The setup script has several options:
 * `-c [release]`: CMSSW release to install (default = CMSSW_10_6_29_patch1)
 * `-f [fork]`: clone from specified fork (default = cms-svj)
 * `-b [branch]`: clone specified branch (default = Run2_UL)
 * `-s [protocol]`: use protocol to clone (default = https, alternative = ssh)
 * `-j [cores]`: # cores for CMSSW compilation (default = 8)
-* `-t`: install HLT releases
+* `-t`: install HLT releases 
 * `-h`: print help message and exit
 
 For more details about the `-t` option, see [HLT in UL](#hlt-in-ul) below.
+
+
+For Run3, do
+```
+wget https://raw.githubusercontent.com/Sam-Harper/SVJProduction/AE_prod_SVJGamma_Run2Run3/setupRun3.sh
+chmod +x setupRun3.sh
+./setupRun3.sh -y 2024
+cd CMSSW_14_0_18
+cmsenv
+cd SVJ/Production
+```
+
+The setup script has several options:
+* `-y [year] : default 2022`
+* `-c [release]`: CMSSW release to install (default = CMSSW_14_0_18)
+* `-f [fork]`: clone from specified fork (default = Sam-Harper)
+* `-b [branch]`: clone specified branch (default = AE_prod_SVJGamma_Run2Run3)
+* `-s [protocol]`: use protocol to clone (default = https, alternative = ssh)
+* `-j [cores]`: # cores for CMSSW compilation (default = 8)
+* `-h`: print help message and exit
+
+
+
 
 ## Steps
 
